@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: qbittorrent-mcp
+    labels:
+      - com.centurylinklabs.watchtower.enable=false
     ports:
       - "${QBITTORRENT_MCP_PORT:-9154}:${QBITTORRENT_MCP_PORT:-9154}"
     env_file:

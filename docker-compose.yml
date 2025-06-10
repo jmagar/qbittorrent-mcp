@@ -1,0 +1,28 @@
+services:
+  qbittorrent-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: qbittorrent-mcp
+    ports:
+      - "${QBITTORRENT_MCP_PORT:-9154}:${QBITTORRENT_MCP_PORT:-9154}"
+    env_file:
+      - .env
+    volumes:
+      - qbittorrent-logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6973/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - qbittorrent-mcp-network
+
+volumes:
+  qbittorrent-logs:
+
+networks:
+  qbittorrent-mcp-network:
+    driver: bridge 

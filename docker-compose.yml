@@ -11,7 +11,7 @@ services:
     env_file:
       - .env
     volumes:
-      - qbittorrent-logs:/app/logs
+      - /mnt/cache/appdata/qbittorrent-mcp/logs:/app/logs
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9154/health"]
@@ -20,11 +20,8 @@ services:
       retries: 3
       start_period: 30s
     networks:
-      - qbittorrent-mcp-network
-
-volumes:
-  qbittorrent-logs:
+      - jakenet
 
 networks:
-  qbittorrent-mcp-network:
-    driver: bridge 
+  jakenet:
+    external: true 
